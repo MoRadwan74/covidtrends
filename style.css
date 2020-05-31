@@ -68,13 +68,9 @@ p {
   min-width: 10rem;
 }
 
-.logowrapper a {
-  text-decoration: none; /* no underline */
-  color: white;
-}
-
 .logowrapper h1 {
   text-align: center;
+  font-weight: bold;
 }
 
 .logos {
@@ -97,7 +93,7 @@ p {
 
 header {
   color: white;
-  background-image: linear-gradient(to bottom, #2c003e, #721b65);
+  background-image: linear-gradient(to bottom, #3c763d, #4bae53);
   position: relative;
   display: flex;
   padding: 0.75rem;
@@ -105,9 +101,10 @@ header {
 }
 
 .explainer {
-  flex: 6;
-  padding-right: 2rem;
-  text-align: left;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 40px;
+  padding-right: 4em;
 }
 
 .explainer a {
@@ -253,15 +250,15 @@ button {
 
   transition-duration: 0.4s;
 
-  background-color: #721b65;
+  background-color: #4bae53;
   color: lightgoldenrodyellow;
-  border: 0.125rem solid #721b65;
+  border: 0.125rem solid #4bae53;
   border-radius: 0.25rem;
 }
 
 button:hover {
-  background-color: rgb(69,10,76);
-  border: 0.125rem solid rgb(69,10,76);
+  background-color: #3c763d;
+  border: 0.125rem solid #3c763d;
   color: lemonchiffon;
 }
 

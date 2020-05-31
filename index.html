@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Covid Trends</title>
+  <title>Saudi Trends</title>
   <link rel="stylesheet" type="text/css" href="normalize.css">
   <link rel="stylesheet" type="text/css" href="style.css?2">
   <script src="libraries/plotly-basic.min.js"></script>
@@ -11,8 +11,8 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Covid Trends">
-  <meta name="twitter:description" content="Visualizing the exponential growth of COVID-19 across the world.">
+  <meta name="twitter:title" content="Saudi Trends">
+  <meta name="twitter:description" content="Visualizing the exponential growth of COVID-19 across Saudi Arabia.">
   <meta name="twitter:site" content="@aatishb">
   <!-- Twitter Summary card images must be at least 120x120px -->
   <meta name="twitter:image" content="https://aatishb.com/covidtrends/logos/covid-trends-logo-nowords.png">
@@ -21,7 +21,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://aatishb.com/covidtrends/" />
   <meta property="og:image" content="https://aatishb.com/covidtrends/logos/covid-trends-logo-nowords.png" />
-  <meta property="og:description" content="Visualizing the exponential growth of COVID-19 across the world." />
+  <meta property="og:description" content="Visualizing the exponential growth of COVID-19 across Saudi Arabia." />
 </head>
 <body>
 
@@ -29,8 +29,14 @@
 
     <header>
 
+      <div class="logowrapper">
+
+        <h1>Saudi Trends</h1>
+
+      </div>
+
         <div class="explainer">
-          <p>This interactive charts the <b><i>new</i></b> {{selectedData.toLowerCase()}} of COVID-19 in the past week vs. the <b><i>total</i></b> {{selectedData.toLowerCase()}} to date. When plotted in this way, exponential growth is represented as a straight line that slopes upwards. Notice that almost all countries follow a very similar path of exponential growth. <i>We're all in this together.</i> <span v-if="isHidden"><a @click="toggleHide">Learn more.</a></span></p>
+          <p>This interactive charts the <b><i>new</i></b> {{selectedData.toLowerCase()}} of COVID-19 in the past week vs. the <b><i>total</i></b> {{selectedData.toLowerCase()}} to date. When plotted in this way, exponential growth is represented as a straight line that slopes upwards. <span v-if="isHidden"><a @click="toggleHide">Learn more.</a></span></p>
 
           <span v-if="!isHidden">
 
@@ -45,17 +51,6 @@
 
             <a id="hide" @click="toggleHide">Hide</a>
           </span>
-        </div>
-
-        <div class="logowrapper">
-
-          <h1><a href="https://aatishb.com/covidtrends">Covid Trends</a></h1>
-
-          <div v-if="!isHidden" class="logos">
-            <a href="https://aatishb.com/" aria-label="Visit the website of Aatish Bhatia"><img src="logos/aatishb-bw.png" height="40" alt="Avatar of Aatish Bhatia"></a>
-            <a href="https://www.youtube.com/user/minutephysics" aria-label="Visit the Youtube channel of Minute Physics"><img src="logos/minutephysics-invert.png" height="40" alt="Minute Physics Logo"></a>
-          </div>
-
         </div>
 
     </header>
@@ -93,10 +88,6 @@
 
         <div v-if="!firstLoad && covidData.length == 0" class="nodata"><span>Not enough data for these parameters.</span></div>
         <div v-if="!firstLoad && covidData.length != 0 && !countries.some(country => selectedCountries.includes(country))" class="nodata"><span>Please select some {{regionType.toLowerCase()}} to display.</span></div>
-        
-        <footer>
-          Created by <a href="https://aatishb.com/">Aatish Bhatia</a> in collaboration with <a href="https://www.youtube.com/user/minutephysics">Minute Physics</a> &middot; World data provided by <a href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins University</a> (updated daily around 00:00 UTC / 20:00 ET) &middot; US state data provided by <a href="https://github.com/nytimes/covid-19-data">NYTimes</a> (updated daily around 16:00 UTC / 12:00 ET)&middot; Shortcuts: +/- for daily changes, space to play/pause &middot; <a href="https://github.com/aatishb/covidtrends#credits">Credits & Source</a> &middot; <a href="https://www.cdc.gov/coronavirus/2019-ncov/prepare/prevention.html">Stay safe!</a>
-        </footer>
 
       </main>
 
