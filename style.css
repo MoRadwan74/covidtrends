@@ -107,12 +107,6 @@ header {
   padding-right: 4em;
 }
 
-.explainer a {
-  text-decoration: underline;
-  color: lightgoldenrodyellow;
-  cursor: pointer;
-}
-
 .explainer p {
   margin-top: 0.5rem;
   font-size: 0.9rem;
@@ -189,6 +183,11 @@ footer {
   padding: 1rem;
   text-align: center;
   margin: auto;
+}
+
+.navelement img {
+  cursor: pointer;
+  width: 3rem;
 }
 
 .navelement > h2 {

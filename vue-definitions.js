@@ -1,3 +1,4 @@
+// TODO: Remove unecessary US and other countries filteration code.
 // custom graph component
 Vue.component('graph', {
 
@@ -669,7 +670,7 @@ window.app = new Vue({
         case 'World':
           return 'Countries';
         case 'Saudi Arabia':
-          return 'Cities';
+          return 'Saudi Arabia Cities';
         case 'Australia':
         case 'US':
           return 'States / Territories';
@@ -929,7 +930,7 @@ window.app = new Vue({
 
     selectedData: 'Confirmed Cases',
 
-    regions: ['World', 'Saudi Arabia', 'US', 'China', 'Australia', 'Canada'],
+    regions: 'Saudi Arabia',
 
     selectedRegion: 'Saudi Arabia',
 
