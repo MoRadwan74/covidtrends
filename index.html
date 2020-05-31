@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Saudi Trends</title>
+  <title>Saudi COVID-19 Trends</title>
   <link rel="stylesheet" type="text/css" href="normalize.css">
   <link rel="stylesheet" type="text/css" href="style.css?2">
   <script src="libraries/plotly-basic.min.js"></script>
@@ -31,26 +31,12 @@
 
       <div class="logowrapper">
 
-        <h1>Saudi Trends</h1>
+        <h1>Saudi COVID-19 Trends</h1>
 
       </div>
 
         <div class="explainer">
-          <p>This interactive charts the <b><i>new</i></b> {{selectedData.toLowerCase()}} of COVID-19 in the past week vs. the <b><i>total</i></b> {{selectedData.toLowerCase()}} to date. When plotted in this way, exponential growth is represented as a straight line that slopes upwards. <span v-if="isHidden"><a @click="toggleHide">Learn more.</a></span></p>
-
-          <span v-if="!isHidden">
-
-            <p>To learn more about this graph, watch this video created by Minute Physics.</p>
-            <br>
-
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/54XLXg4fYsc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-            <p><i><b>Note:</b> The x-axis of this graph is not time</i>, but is instead the total number of cases or deaths.</p>
-
-            <p><b>Tips:</b> Press Space (or the play button) to Play/Pause. Press +/- keys (or drag the slider) to see daily changes. Hover over the graph for more info. Drag your mouse to zoom in, doubleclick to zoom back out. And don't forget to wash your hands!</p>
-
-            <a id="hide" @click="toggleHide">Hide</a>
-          </span>
+          <p>This interactive charts the <b><i>new</i></b> {{selectedData.toLowerCase()}} of COVID-19 in the past week vs. the <b><i>total</i></b> {{selectedData.toLowerCase()}} to date. When plotted in this way, exponential growth is represented as a straight line that slopes upwards.</p>
         </div>
 
     </header>
@@ -64,8 +50,8 @@
         <div v-if="covidData.length > 0 && countries.some(country => selectedCountries.includes(country))" class="nav">
 
           <div class="navelement">
-            <img v-show="paused" @click="play" src="icons/play.svg" alt="Play" style="width: 3rem;">
-            <img v-show="!paused" @click="play" src="icons/pause.svg" alt="Pause" style="width: 3rem;">
+            <img v-show="paused" @click="play" src="icons/play.png" alt="Play" title="Play">
+            <img v-show="!paused" @click="play" src="icons/pause.png" alt="Pause" title="Pause">
           </div>
 
           <div class="navelement">
@@ -101,12 +87,6 @@
               {{ d }}
             </option>
           </select>
-          <label for="selectedRegion">Select Region</label>
-          <select id="selectedRegion" v-model="selectedRegion" @mousedown="pause">
-            <option v-for="s in regions" v-bind:value="s">
-              {{ s }}
-            </option>
-          </select>
           <label for="selectedScale">Select Scale</label>
           <select @change="createURL" id="selectedScale" v-model="selectedScale" @mousedown="pause">
             <option v-for="s in scale" v-bind:value="s">
@@ -130,7 +110,7 @@
           <h2>{{regionType}}</h2>
 
           <div class="search">
-            <input id="searchField" v-model="searchField" placeholder="Search For A Location" aria-label="Search For A Location">
+            <input id="searchField" v-model="searchField" placeholder="Search for a city" aria-label="Search For A Location">
           </div>
 
           <div class="buttonwrapper">
