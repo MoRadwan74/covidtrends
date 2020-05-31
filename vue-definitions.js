@@ -319,8 +319,7 @@ window.app = new Vue({
     },
 
     pullData(selectedData, selectedRegion, updateSelectedCountries = true) {
-
-      if (selectedRegion != 'US') {
+      if (selectedRegion != 'US' && selectedRegion != 'Saudi Arabia') {
         let url;
         if (selectedData == 'Confirmed Cases') {
           url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
@@ -330,7 +329,14 @@ window.app = new Vue({
           return;
         }
         Plotly.d3.csv(url, (data) => this.processData(data, selectedRegion, updateSelectedCountries));
-      } else { // selectedRegion == 'US'
+      }
+      else if (selectedRegion == 'Saudi Arabia') {
+        const type = (selectedData == 'Reported Deaths') ? 'Deaths' : 'Confirmed';
+        const url = 'http://datagovsa.mapapps.cloud/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acases&version=1.0.0'
+
+        Plotly.d3.csv(url, (data) => this.processData(this.preprocessSaudiData(data, type), selectedRegion, updateSelectedCountries));
+      } 
+      else { // selectedRegion == 'US'
         const type = (selectedData == 'Reported Deaths') ? 'deaths' : 'cases';
         const url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv';
         Plotly.d3.csv(url, (data) => this.processData(this.preprocessNYTData(data, type), selectedRegion, updateSelectedCountries));
@@ -476,6 +482,24 @@ window.app = new Vue({
       return Object.values(recastData);
 
       function fixNYTDate(date) {
+        let tmp = date.split('-');
+        return `${tmp[1]}/${tmp[2]}/${tmp[0].substr(2)}`;
+      }
+    },
+
+    preprocessSaudiData(data, type) {
+      let recastData = {};
+      // Sort cities by date
+      data = data.slice().sort((a, b) => Plotly.d3.ascending(a.Date, b.Date))
+      data.forEach(e => {
+        e.Date = e.Date.slice(0, 10);
+        let st = recastData[e.City_Name] = (recastData[e.City_Name] || {'Province/State': e.City_Name, 'Country/Region': 'Saudi Arabia', 'Lat': null, 'Long': null});
+        st[fixKSADate(e.Date)] = parseInt(e[type]);
+      });
+      
+      return Object.values(recastData);
+
+      function fixKSADate(date) {
         let tmp = date.split('-');
         return `${tmp[1]}/${tmp[2]}/${tmp[0].substr(2)}`;
       }
@@ -644,6 +668,8 @@ window.app = new Vue({
       switch (this.selectedRegion) {
         case 'World':
           return 'Countries';
+        case 'Saudi Arabia':
+          return 'Cities';
         case 'Australia':
         case 'US':
           return 'States / Territories';
@@ -903,9 +929,9 @@ window.app = new Vue({
 
     selectedData: 'Confirmed Cases',
 
-    regions: ['World', 'US', 'China', 'Australia', 'Canada'],
+    regions: ['World', 'Saudi Arabia', 'US', 'China', 'Australia', 'Canada'],
 
-    selectedRegion: 'World',
+    selectedRegion: 'Saudi Arabia',
 
     sliderSelected: false,
 
@@ -917,7 +943,7 @@ window.app = new Vue({
 
     selectedScale: 'Logarithmic Scale',
 
-    minCasesInCountry: 50,
+    minCasesInCountry: 10,
 
     dates: [],
 
