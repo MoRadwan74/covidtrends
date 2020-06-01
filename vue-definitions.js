@@ -320,27 +320,11 @@ window.app = new Vue({
     },
 
     pullData(selectedData, selectedRegion, updateSelectedCountries = true) {
-      if (selectedRegion != 'US' && selectedRegion != 'Saudi Arabia') {
-        let url;
-        if (selectedData == 'Confirmed Cases') {
-          url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv';
-        } else if (selectedData == 'Reported Deaths') {
-          url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv';
-        } else {
-          return;
-        }
-        Plotly.d3.csv(url, (data) => this.processData(data, selectedRegion, updateSelectedCountries));
-      }
-      else if (selectedRegion == 'Saudi Arabia') {
+      if (selectedRegion == 'Saudi Arabia') {
         const type = (selectedData == 'Reported Deaths') ? 'Deaths' : 'Confirmed';
         const url = 'http://datagovsa.mapapps.cloud/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acases&version=1.0.0'
 
         Plotly.d3.csv(url, (data) => this.processData(this.preprocessSaudiData(data, type), selectedRegion, updateSelectedCountries));
-      } 
-      else { // selectedRegion == 'US'
-        const type = (selectedData == 'Reported Deaths') ? 'deaths' : 'cases';
-        const url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv';
-        Plotly.d3.csv(url, (data) => this.processData(this.preprocessNYTData(data, type), selectedRegion, updateSelectedCountries));
       }
     },
 
@@ -472,20 +456,6 @@ window.app = new Vue({
 
       this.firstLoad = false;
       this.createURL();
-    },
-
-    preprocessNYTData(data, type) {
-      let recastData = {};
-      data.forEach(e => {
-        let st = recastData[e.state] = (recastData[e.state] || {'Province/State': e.state, 'Country/Region': 'US', 'Lat': null, 'Long': null});
-        st[fixNYTDate(e.date)] = parseInt(e[type]);
-      });
-      return Object.values(recastData);
-
-      function fixNYTDate(date) {
-        let tmp = date.split('-');
-        return `${tmp[1]}/${tmp[2]}/${tmp[0].substr(2)}`;
-      }
     },
 
     preprocessSaudiData(data, type) {
