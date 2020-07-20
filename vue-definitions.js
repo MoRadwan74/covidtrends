@@ -322,7 +322,7 @@ window.app = new Vue({
     pullData(selectedData, selectedRegion, updateSelectedCountries = true) {
       if (selectedRegion == 'Saudi Arabia') {
         const type = (selectedData == 'Reported Deaths') ? 'Deaths' : 'Confirmed';
-        const url = 'http://datagovsa.mapapps.cloud/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acasestrial&version=1.0.0'
+        const url = 'http://mapsaudi.com/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acasestrial&version=1.0.0'
 
         Plotly.d3.csv(url, (data) => this.processData(this.preprocessSaudiData(data, type), selectedRegion, updateSelectedCountries));
       }
