@@ -321,7 +321,7 @@ window.app = new Vue({
 
     pullData(selectedData, selectedRegion, updateSelectedCountries = true) {
       if (selectedRegion == 'Saudi Arabia') {
-        const type = (selectedData == 'Reported Deaths') ? 'Deaths' : 'Confirmed';
+        const type = (selectedData == 'Reported Deaths') ? 'deaths' : 'confirmed';
         const url = 'http://mapsaudi.com/geoserver/ows?outputFormat=csv&service=WFS&srs=EPSG%3A3857&request=GetFeature&typename=geonode%3Acasestrial&version=1.0.0'
 
         Plotly.d3.csv(url, (data) => this.processData(this.preprocessSaudiData(data, type), selectedRegion, updateSelectedCountries));
@@ -461,12 +461,12 @@ window.app = new Vue({
     preprocessSaudiData(data, type) {
       let recastData = {};
       // Sort cities by date
-      data = data.slice().sort((a, b) => Plotly.d3.ascending(a.Reportdt, b.Reportdt))
+      data = data.slice().sort((a, b) => Plotly.d3.ascending(a.reportdt, b.reportdt));
 
       data.forEach(e => {
-        e.Reportdt = e.Reportdt.slice(0, 10);
-        let st = recastData[e.PlaceNam_1] = (recastData[e.PlaceNam_1] || {'Province/State': e.PlaceNam_1, 'Country/Region': 'Saudi Arabia', 'Lat': null, 'Long': null});
-        st[fixKSADate(e.Reportdt)] = parseInt(e[type]);
+        e.reportdt = e.reportdt.slice(0, 10);
+        let st = recastData[e.placenam_1] = (recastData[e.placenam_1] || {'Province/State': e.placenam_1, 'Country/Region': 'Saudi Arabia', 'Lat': null, 'Long': null});
+        st[fixKSADate(e.reportdt)] = parseInt(e[type]);
       });
       
       return Object.values(recastData);
